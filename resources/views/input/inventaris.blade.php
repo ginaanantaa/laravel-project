@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Form Menu Makanan</title>
+    <title>Form Inventaris</title>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        /* Import Poppins Font */
+        /* Your existing styles for consistency */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
         body {
@@ -70,13 +72,14 @@
         input:focus,
         textarea:focus {
             border-color: #ff7043;
-            /* Orange focus color */
+            /* Orange Focus Color */
             box-shadow: 0 0 8px rgba(255, 112, 67, 0.3);
+            /* Orange Focus Shadow */
         }
 
         button {
             background-color: #ff7043;
-            /* Orange background */
+            /* Orange Button */
             color: white;
             padding: 14px 28px;
             font-size: 1.125rem;
@@ -115,7 +118,8 @@
 
         /* Button Styling for Kembali */
         .btn-kembali {
-            background-color: #e2e8f0;
+            background-color: #f0f4f8;
+            /* Light background for Kembali */
             color: #2d3748;
             padding: 14px 28px;
             font-size: 1.125rem;
@@ -129,7 +133,8 @@
         }
 
         .btn-kembali:hover {
-            background-color: #cbd5e0;
+            background-color: #e2e8f0;
+            /* Light hover color */
             transform: translateY(-2px);
         }
 
@@ -148,29 +153,29 @@
         </div>
         @endif
 
-        <h1>Form Menu Makanan</h1>
+        <h1>Form Inventaris</h1>
 
         <!-- Form -->
-        <form action="{{ route('input.menu.submit') }}" method="POST">
+        <form action="{{ route('input.inventaris.submit') }}" method="POST">
             @csrf
             <div class="form-group">
-                <label for="kode_makanan">Kode Makanan</label>
-                <input type="text" id="kode_makanan" name="kode_makanan" required>
+                <label for="kode_barang">Kode Barang</label>
+                <input type="text" id="kode_barang" name="kode_barang" required>
             </div>
 
             <div class="form-group">
-                <label for="nama_makanan">Nama Makanan</label>
-                <input type="text" id="nama_makanan" name="nama_makanan" required>
+                <label for="nama_barang">Nama Barang</label>
+                <input type="text" id="nama_barang" name="nama_barang" required>
             </div>
 
             <div class="form-group">
-                <label for="rincian">Rincian</label>
-                <textarea id="rincian" name="rincian" rows="4" required></textarea>
+                <label for="jumlah">Jumlah</label>
+                <input type="number" id="jumlah" name="jumlah" required>
             </div>
 
             <div class="form-group">
-                <label for="harga">Harga</label>
-                <input type="number" id="harga" name="harga" required>
+                <label for="kondisi">Kondisi</label>
+                <input type="text" id="kondisi" name="kondisi" required>
             </div>
 
             <div class="form-group">
@@ -179,7 +184,7 @@
         </form>
 
         <!-- Back Button (Kembali) -->
-        <form action="{{ route('data.menu') }}" method="GET">
+        <form action="{{ route('data.inventaris') }}" method="GET">
             <div class="form-group">
                 <button type="submit" class="btn-kembali">Kembali</button>
             </div>

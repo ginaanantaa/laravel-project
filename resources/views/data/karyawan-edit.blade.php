@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Edit Menu</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Edit Data Karyawan</title>
 
     <style>
         body {
@@ -16,7 +14,6 @@
             color: #2d3748;
             margin: 0;
             padding: 0;
-            font-family: "Poppins";
         }
 
         .container {
@@ -48,16 +45,13 @@
             color: #2d3748;
         }
 
-        input[type="text"],
-        input[type="number"],
-        textarea {
+        input[type="text"] {
             padding: 12px;
             margin-bottom: 20px;
             font-size: 1.125rem;
             border-radius: 8px;
             border: 1px solid #e2e8f0;
             background-color: #fafafa;
-            resize: vertical;
         }
 
         button {
@@ -96,37 +90,31 @@
             background-color: #cbd5e0;
             transform: translateY(-2px);
         }
-
-        .button-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Edit Menu</h1>
+        <h1>Edit Data Karyawan</h1>
 
-        <form action="{{ route('data.menu.update', $menu->id) }}" method="POST">
+        <form action="{{ route('data.karyawan.update', $karyawan->id) }}" method="POST">
             @csrf
             @method('PUT')
 
-            <label for="kode_makanan">Kode Makanan:</label>
-            <input type="text" id="kode_makanan" name="kode_makanan" value="{{ old('kode_makanan', $menu->kode_makanan) }}" required>
+            <label for="kode_karyawan">Kode Karyawan:</label>
+            <input type="text" id="kode_karyawan" name="kode_karyawan" value="{{ $karyawan->kode_karyawan }}" required>
 
-            <label for="nama_makanan">Nama Makanan:</label>
-            <input type="text" id="nama_makanan" name="nama_makanan" value="{{ old('nama_makanan', $menu->nama_makanan) }}" required>
+            <label for="nama_karyawan">Nama Karyawan:</label>
+            <input type="text" id="nama_karyawan" name="nama_karyawan" value="{{ $karyawan->nama_karyawan }}" required>
 
-            <label for="rincian">Rincian:</label>
-            <textarea id="rincian" name="rincian" required>{{ old('rincian', $menu->rincian) }}</textarea>
+            <label for="jabatan">Jabatan:</label>
+            <input type="text" id="jabatan" name="jabatan" value="{{ $karyawan->jabatan }}" required>
 
-            <label for="harga">Harga:</label>
-            <input type="number" id="harga" name="harga" value="{{ old('harga', $menu->harga) }}" required>
+            <label for="nomor_telepon">Nomor Telepon:</label>
+            <input type="text" id="nomor_telepon" name="nomor_telepon" value="{{ $karyawan->nomor_telepon }}" required>
 
             <button type="submit">Update</button>
-            <a href="{{ route('data.menu') }}" class="btn-secondary">Cancel</a>
+            <a href="{{ route('data.karyawan') }}" class="btn-secondary">Cancel</a>
         </form>
     </div>
 </body>

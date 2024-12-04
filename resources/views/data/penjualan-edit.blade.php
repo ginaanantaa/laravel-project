@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Edit Menu</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Edit Data Penjualan</title>
 
     <style>
         body {
@@ -16,7 +14,6 @@
             color: #2d3748;
             margin: 0;
             padding: 0;
-            font-family: "Poppins";
         }
 
         .container {
@@ -50,14 +47,13 @@
 
         input[type="text"],
         input[type="number"],
-        textarea {
+        input[type="date"] {
             padding: 12px;
             margin-bottom: 20px;
             font-size: 1.125rem;
             border-radius: 8px;
             border: 1px solid #e2e8f0;
             background-color: #fafafa;
-            resize: vertical;
         }
 
         button {
@@ -107,26 +103,32 @@
 
 <body>
     <div class="container">
-        <h1>Edit Menu</h1>
+        <h1>Edit Data Penjualan</h1>
 
-        <form action="{{ route('data.menu.update', $menu->id) }}" method="POST">
+        <form action="{{ route('data.penjualan.update', $penjualan->id) }}" method="POST">
             @csrf
             @method('PUT')
 
-            <label for="kode_makanan">Kode Makanan:</label>
-            <input type="text" id="kode_makanan" name="kode_makanan" value="{{ old('kode_makanan', $menu->kode_makanan) }}" required>
+            <label for="nama_produk">Nama Produk:</label>
+            <input type="text" id="nama_produk" name="nama_produk" value="{{ $penjualan->nama_produk }}" required>
 
-            <label for="nama_makanan">Nama Makanan:</label>
-            <input type="text" id="nama_makanan" name="nama_makanan" value="{{ old('nama_makanan', $menu->nama_makanan) }}" required>
+            <label for="tanggal">Tanggal:</label>
+            <input type="date" id="tanggal" name="tanggal" value="{{ $penjualan->tanggal }}" required>
 
-            <label for="rincian">Rincian:</label>
-            <textarea id="rincian" name="rincian" required>{{ old('rincian', $menu->rincian) }}</textarea>
+            <label for="banyak_terjual">Banyak Terjual:</label>
+            <input type="number" id="banyak_terjual" name="banyak_terjual" value="{{ $penjualan->banyak_terjual }}" required>
 
-            <label for="harga">Harga:</label>
-            <input type="number" id="harga" name="harga" value="{{ old('harga', $menu->harga) }}" required>
+            <label for="harga_per_unit">Harga Per Unit:</label>
+            <input type="number" id="harga_per_unit" name="harga_per_unit" value="{{ $penjualan->harga_per_unit }}" required>
+
+            <label for="durasi_penjualan">Durasi Penjualan (Hari):</label>
+            <input type="number" id="durasi_penjualan" name="durasi_penjualan" value="{{ $penjualan->durasi_penjualan }}" required>
+
+            <label for="bulan_periode">Bulan Periode:</label>
+            <input type="text" id="bulan_periode" name="bulan_periode" value="{{ $penjualan->bulan_periode }}" required>
 
             <button type="submit">Update</button>
-            <a href="{{ route('data.menu') }}" class="btn-secondary">Cancel</a>
+            <a href="{{ route('data.penjualan') }}" class="btn-secondary">Cancel</a>
         </form>
     </div>
 </body>

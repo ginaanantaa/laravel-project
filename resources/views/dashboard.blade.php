@@ -184,12 +184,12 @@
             <li class="dropdown">
                 <a href="javascript:void(0)" class="text-lg dropbtn" onclick="toggleDropdown('formsDropdown')">Forms</a>
                 <ul id="formsDropdown" class="dropdown-content ml-4 space-y-2">
-                    <li><a href="{{ route('data.menu') }}" class="text-lg">Input Menu Makanan</a></li>
-                    <li><a href="{{ route('data.bahan') }}" class="text-lg">Input Bahan Baku</a></li>
-                    <li><a href="{{ route('data.pemasok') }}" class="text-lg">Input Pemasok</a></li>
-                    <li><a href="{{ route('data.karyawan') }}" class="text-lg">Input Karyawan</a></li>
-                    <li><a href="{{ route('data.inventaris') }}" class="text-lg">Input Inventaris</a></li>
-                    <li><a href="{{ route('data.penjualan') }}" class="text-lg">Input Penjualan</a></li>
+                    <li><a href="{{ route('input.menu') }}" class="text-lg">Input Menu Makanan</a></li>
+                    <li><a href="{{ route('input.bahan') }}" class="text-lg">Input Bahan Baku</a></li>
+                    <li><a href="{{ route('input.pemasok') }}" class="text-lg">Input Pemasok</a></li>
+                    <li><a href="{{ route('input.karyawan') }}" class="text-lg">Input Karyawan</a></li>
+                    <li><a href="{{ route('input.inventaris') }}" class="text-lg">Input Inventaris</a></li>
+                    <li><a href="{{ route('input.penjualan') }}" class="text-lg">Input Penjualan</a></li>
                 </ul>
             </li>
 
@@ -197,7 +197,7 @@
             <li class="dropdown">
                 <a href="javascript:void(0)" class="text-lg dropbtn" onclick="toggleDropdown('perhitunganDropdown')">Perhitungan</a>
                 <ul id="perhitunganDropdown" class="dropdown-content ml-4 space-y-2">
-                    <li><a href="{{ route('data.menu') }}" class="text-lg">Processing</a></li>
+                    <li><a href="{{ route('perhitungan.processing') }}" class="text-lg">Processing</a></li>
                 </ul>
             </li>
         </ul>
@@ -206,12 +206,12 @@
     <div class="main-content">
         <!-- Header -->
         <div class="header">
-            <h2>Selamat datang</h2>
+            <h2>Dashboard</h2>
         </div>
 
         <!-- Card Section -->
         <div class="card">
-            <h4 class="total">Rp 10.000.000,-</h4>
+            <h4 class="total">Rp {{ number_format($totalPenjualan, 0, ',', '.') }},-</h4>
             <p class="total-description">
                 Total ini mencakup semua transaksi dalam periode yang berlaku.
             </p>
