@@ -154,7 +154,7 @@
 
         <!-- Form -->
         <form action="{{ route('input.menu.submit') }}" method="POST">
-            @csrf
+            <!-- @csrf -->
             <div class="form-group">
                 <label for="kode_makanan">Kode Makanan</label>
                 <input type="text" id="kode_makanan" name="kode_makanan" required>
