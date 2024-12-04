@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Edit Menu</title>
 
@@ -108,7 +107,6 @@
         <h1>Edit Menu</h1>
 
         <form action="{{ route('data.menu.update', $menu->id) }}" method="POST">
-            @csrf
             @method('PUT')
 
             <label for="kode_makanan">Kode Makanan:</label>
