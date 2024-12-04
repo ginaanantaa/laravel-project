@@ -1,5 +1,3 @@
-@extends('layouts.app')
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
-    <!-- Link to Google Fonts for better typography -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -50,6 +46,7 @@
         .sidebar ul li {
             margin: 15px 0;
             position: relative;
+            /* Added relative positioning */
         }
 
         .sidebar ul li a {
@@ -71,16 +68,27 @@
             display: none;
             list-style-type: none;
             padding-left: 20px;
-            max-height: 0;
+            position: absolute;
+            top: 100%;
+            /* Position it below the dropdown button */
+            left: 0;
+            background-color: #ff7043;
+            width: 100%;
+            visibility: hidden;
+            /* Hidden initially */
             opacity: 0;
-            transition: max-height 0.5s ease-out, opacity 0.3s ease-out;
+            /* Hidden initially */
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 10;
+            /* Ensure it is on top of other content */
         }
 
         .dropdown.active .dropdown-content {
             display: block;
-            max-height: 200px;
-            /* Set max-height to a value that suits your content */
+            /* Make it visible */
+            visibility: visible;
             opacity: 1;
+            /* Fade in */
         }
 
         .dropdown-content li {
@@ -152,65 +160,49 @@
 </head>
 
 <body>
-    <!-- Sidebar -->
     <div class="sidebar">
         <div class="logo">
             <h2>Pondok Orange</h2>
         </div>
         <ul>
-            <li><a href="" class="text-lg">Dashboard</a></li>
+            <li><a href="{{ route('dashboard') }}" class="text-lg">Dashboard</a></li>
+
+            <!-- Dropdown for Data Menu -->
             <li class="dropdown">
-                <a href="javascript:void(0)" class="text-lg">Data Menu Makanan</a>
-                <ul class="dropdown-content">
-                    <li><a href="#">Option 1</a></li>
-                    <li><a href="#">Option 2</a></li>
-                    <li><a href="#">Option 3</a></li>
+                <a href="javascript:void(0)" class="text-lg dropbtn" onclick="toggleDropdown('tablesAndFormsDropdown')">Data</a>
+                <ul id="tablesAndFormsDropdown" class="dropdown-content ml-4 space-y-2">
+                    <li><a href="{{ route('data.menu') }}" class="text-lg">Data Menu Makanan</a></li>
+                    <li><a href="{{ route('data.bahan') }}" class="text-lg">Data Bahan Baku</a></li>
+                    <li><a href="{{ route('data.pemasok') }}" class="text-lg">Data Pemasok</a></li>
+                    <li><a href="{{ route('data.karyawan') }}" class="text-lg">Data Karyawan</a></li>
+                    <li><a href="{{ route('data.inventaris') }}" class="text-lg">Data Inventaris</a></li>
+                    <li><a href="{{ route('data.penjualan') }}" class="text-lg">Data Penjualan</a></li>
                 </ul>
             </li>
+
+            <!-- Dropdown for Input Forms -->
             <li class="dropdown">
-                <a href="javascript:void(0)" class="text-lg">Data Bahan Baku</a>
-                <ul class="dropdown-content">
-                    <li><a href="#">Option 1</a></li>
-                    <li><a href="#">Option 2</a></li>
-                    <li><a href="#">Option 3</a></li>
+                <a href="javascript:void(0)" class="text-lg dropbtn" onclick="toggleDropdown('formsDropdown')">Forms</a>
+                <ul id="formsDropdown" class="dropdown-content ml-4 space-y-2">
+                    <li><a href="{{ route('data.menu') }}" class="text-lg">Input Menu Makanan</a></li>
+                    <li><a href="{{ route('data.bahan') }}" class="text-lg">Input Bahan Baku</a></li>
+                    <li><a href="{{ route('data.pemasok') }}" class="text-lg">Input Pemasok</a></li>
+                    <li><a href="{{ route('data.karyawan') }}" class="text-lg">Input Karyawan</a></li>
+                    <li><a href="{{ route('data.inventaris') }}" class="text-lg">Input Inventaris</a></li>
+                    <li><a href="{{ route('data.penjualan') }}" class="text-lg">Input Penjualan</a></li>
                 </ul>
             </li>
+
+            <!-- Dropdown for Perhitungan -->
             <li class="dropdown">
-                <a href="javascript:void(0)" class="text-lg">Data Pemasok</a>
-                <ul class="dropdown-content">
-                    <li><a href="#">Option 1</a></li>
-                    <li><a href="#">Option 2</a></li>
-                    <li><a href="#">Option 3</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="javascript:void(0)" class="text-lg">Data Karyawan</a>
-                <ul class="dropdown-content">
-                    <li><a href="#">Option 1</a></li>
-                    <li><a href="#">Option 2</a></li>
-                    <li><a href="#">Option 3</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="javascript:void(0)" class="text-lg">Data Inventaris</a>
-                <ul class="dropdown-content">
-                    <li><a href="#">Option 1</a></li>
-                    <li><a href="#">Option 2</a></li>
-                    <li><a href="#">Option 3</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="javascript:void(0)" class="text-lg">Data Penjualan</a>
-                <ul class="dropdown-content">
-                    <li><a href="#">Option 1</a></li>
-                    <li><a href="#">Option 2</a></li>
-                    <li><a href="#">Option 3</a></li>
+                <a href="javascript:void(0)" class="text-lg dropbtn" onclick="toggleDropdown('perhitunganDropdown')">Perhitungan</a>
+                <ul id="perhitunganDropdown" class="dropdown-content ml-4 space-y-2">
+                    <li><a href="{{ route('data.menu') }}" class="text-lg">Processing</a></li>
                 </ul>
             </li>
         </ul>
     </div>
 
-    <!-- Main Content -->
     <div class="main-content">
         <!-- Header -->
         <div class="header">
@@ -227,7 +219,7 @@
     </div>
 
     <script>
-        // Function to toggle dropdown visibility
+        // Function to toggle dropdown visibility with transition
         const dropdowns = document.querySelectorAll('.dropdown');
         dropdowns.forEach(dropdown => {
             dropdown.addEventListener('click', () => {
