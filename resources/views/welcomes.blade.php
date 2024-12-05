@@ -48,6 +48,20 @@
             background-color: #e65428;
             transform: scale(1.05);
         }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        img {
+            height: 500px;
+            width: 700px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
     </style>
 </head>
 
@@ -70,6 +84,10 @@
             @endauth
         </div>
         @endif
+    </div>
+
+    <div class="image-container">
+        <img src="/images/WhatsApp Image 2024-07-10 at 22.17.29_a1b89088.jpg" alt="Pondok Orange">
     </div>
 </body>
 
