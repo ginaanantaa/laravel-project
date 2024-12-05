@@ -87,7 +87,7 @@
     </div>
 
     <div class="image-container">
-        <img src="{{ asset('images/WhatsApp Image 2024-07-10 at 22.17.29_a1b89088.jpg') }}" alt="Pondok Orange">
+        <img src="/images/img.jpg" alt="Pondok Orange">
     </div>
 </body>
 
