@@ -87,7 +87,7 @@
     </div>
 
     <div class="image-container">
-        <img src="/images/img.jpg" alt="Pondok Orange">
+        <img src="img.jpg" alt="Pondok Orange">
     </div>
 </body>
 
