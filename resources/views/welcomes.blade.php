@@ -87,7 +87,7 @@
     </div>
 
     <div class="image-container">
-        <img src="https://laravelrev-project-git-main-keyshaards-projects.vercel.app/?vercelToolbarCode=3sUfYOe_i4y72H1/images/WhatsApp Image 2024-07-10 at 22.17.29_a1b89088.jpg" alt="Pondok Orange">
+        <img src="{{ asset('images/WhatsApp Image 2024-07-10 at 22.17.29_a1b89088.jpg') }}" alt="Pondok Orange">
     </div>
 </body>
 
