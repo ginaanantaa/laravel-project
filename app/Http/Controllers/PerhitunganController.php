@@ -49,16 +49,17 @@ class PerhitunganController extends Controller
     // Perform the clustering analysis on the data
     private function performClustering($penjualans)
     {
-        // Map the data for clustering - assuming 'banyak_terjual' as the key for clustering
+        // Map the data for clustering - assuming both 'banyak_terjual' and 'durasi_penjualan' are used
         $data = $penjualans->map(function ($penjualan) {
             return [
                 'nama_produk' => $penjualan->nama_produk,
                 'banyak_terjual' => $penjualan->banyak_terjual,
+                'durasi_penjualan' => $penjualan->durasi_penjualan,
             ];
         });
 
-        // Perform a basic clustering (e.g., K-means with 3 clusters)
-        $clusters = $this->kMeansClustering($data, 3);
+        // Perform clustering with custom logic
+        $clusters = $this->customClustering($data);
 
         // Store the clusters in the session for later use on the result page
         session(['clusters' => $clusters]);
@@ -66,31 +67,24 @@ class PerhitunganController extends Controller
         return $clusters;
     }
 
-    // A basic clustering function (e.g., K-means with 3 clusters based on 'banyak_terjual')
-    private function kMeansClustering($data, $k)
+    // Custom clustering function based on both 'banyak_terjual' and 'durasi_penjualan'
+    private function customClustering($data)
     {
-        // Sort the data by 'banyak_terjual'
-        $sortedData = $data->sortBy('banyak_terjual');
-
-        // Calculate the size of each cluster
-        $size = $sortedData->count();
-        $lowThreshold = $sortedData->values()[floor($size / 3)]['banyak_terjual'];
-        $highThreshold = $sortedData->values()[floor((2 * $size) / 3)]['banyak_terjual'];
-
+        // Define the cluster thresholds based on the 'banyak_terjual' and 'durasi_penjualan' 
         $clusters = [
-            'Cluster 1 (Low)' => [],
-            'Cluster 2 (Medium)' => [],
-            'Cluster 3 (High)' => [],
+            'Menu Favorit' => [],
+            'Menu Sedang' => [],
+            'Menu Kurang Favorit' => [],
         ];
 
-        // Group data into clusters based on thresholds
+        // Define the criteria for clustering based on 'banyak_terjual' and 'durasi_penjualan'
         foreach ($data as $item) {
-            if ($item['banyak_terjual'] <= $lowThreshold) {
-                $clusters['Cluster 1 (Low)'][] = $item;
-            } elseif ($item['banyak_terjual'] <= $highThreshold) {
-                $clusters['Cluster 2 (Medium)'][] = $item;
+            if ($item['banyak_terjual'] >= 85 + ((140 - 85) / 2) && $item['durasi_penjualan'] == 1) {
+                $clusters['Menu Favorit'][] = $item;
+            } elseif ($item['banyak_terjual'] >= 5 + ((85 - 5) / 2) && $item['banyak_terjual'] < 140 && $item['durasi_penjualan'] == 1) {
+                $clusters['Menu Sedang'][] = $item;
             } else {
-                $clusters['Cluster 3 (High)'][] = $item;
+                $clusters['Menu Kurang Favorit'][] = $item;
             }
         }
 

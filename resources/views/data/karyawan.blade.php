@@ -8,13 +8,15 @@
 
     <title>Data Karyawan</title>
 
-    <!-- Google Fonts Poppins -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Link to Poppins font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
         /* Apply Poppins font to the whole page */
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: "Poppins", sans-serif;
             background-color: #f7fafc;
             color: #2d3748;
             margin: 0;
@@ -54,7 +56,6 @@
 
         table th {
             background-color: #ff7043;
-            /* Orange Header */
             color: white;
             font-weight: 600;
         }
@@ -71,72 +72,55 @@
             font-size: 1.125rem;
         }
 
-        table td .btn-edit,
-        table td .btn-delete {
-            padding: 6px 12px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .btn-edit {
-            margin-right: 8px;
-            color: black;
-        }
-
-        .btn-edit:hover {
-            color: #ff5722;
-            /* Darker orange for edit hover */
-        }
-
-        .btn-delete:hover {
-            color: #d32f2f;
-            /* Red color for delete hover */
-        }
-
         .btn {
-            background-color: #e2e8f0;
             color: #2d3748;
-            padding: 14px 28px;
             font-size: 1.125rem;
             font-weight: 600;
-            border-radius: 8px;
             border: none;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
             width: auto;
             min-width: 160px;
+            padding: 8px 12px;
+            border-radius: 6px;
         }
 
         .btn:hover {
-            background-color: #cbd5e0;
             transform: translateY(-2px);
-        }
-
-        .btn:focus {
-            outline: none;
         }
 
         .btn-tambah {
             background-color: #ff7043;
-            /* Orange Button */
             color: white;
             margin-bottom: 20px;
         }
 
         .btn-tambah:hover {
             background-color: #ff5722;
-            /* Darker orange for hover */
         }
 
-        .btn-kembali {
-            background-color: #e2e8f0;
-            color: #2d3748;
-            margin-top: 10px;
+        .btn-edit {
+            border: 2px solid #ffa726;
+            color: #ffa726;
+            text-decoration: none;
+            padding-inline: 4px;
         }
 
-        .btn-kembali:hover {
-            background-color: #cbd5e0;
+        .btn-edit:hover {
+            background-color: #ffa726;
+            color: white;
+        }
+
+        .btn-delete {
+            border: 2px solid #e57373;
+            color: #e57373;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .btn-delete:hover {
+            background-color: #e57373;
+            color: white;
         }
 
         .button-container {
@@ -148,14 +132,30 @@
         .button-container .form-group {
             width: 48%;
         }
+
+        /* Style for success message */
+        .alert-success {
+            background-color: #38a169;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
     </style>
 </head>
 
-<body class="font-sans antialiased">
+<body>
     <div class="container">
         <h1>Data Karyawan</h1>
 
-        <!-- Table to display karyawan data -->
+        <!-- Success message display -->
+        @if(session('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+        @endif
+
         <table>
             <thead>
                 <tr>
@@ -174,12 +174,9 @@
                     <td>{{ $karyawan->jabatan }}</td>
                     <td>{{ $karyawan->nomor_telepon }}</td>
                     <td>
-                        <!-- Edit Button -->
                         <form action="{{ route('data.karyawan.edit', $karyawan->id) }}" method="GET" style="display: inline;">
                             <button type="submit" class="btn btn-edit">Edit</button>
                         </form>
-
-                        <!-- Delete Button -->
                         <form action="{{ route('data.karyawan.destroy', $karyawan->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
@@ -191,7 +188,6 @@
             </tbody>
         </table>
 
-        <!-- Button container with side-by-side buttons -->
         <div class="button-container">
             <form action="{{ url('/input/karyawan') }}" method="GET">
                 <div class="form-group">

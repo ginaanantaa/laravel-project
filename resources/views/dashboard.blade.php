@@ -7,12 +7,14 @@
     <title>Welcome</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        /* Global Styles */
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f7fafc;
             margin: 0;
             padding: 0;
             display: flex;
+            box-sizing: border-box;
         }
 
         /* Sidebar */
@@ -46,7 +48,6 @@
         .sidebar ul li {
             margin: 15px 0;
             position: relative;
-            /* Added relative positioning */
         }
 
         .sidebar ul li a {
@@ -70,25 +71,19 @@
             padding-left: 20px;
             position: absolute;
             top: 100%;
-            /* Position it below the dropdown button */
             left: 0;
             background-color: #ff7043;
             width: 100%;
             visibility: hidden;
-            /* Hidden initially */
             opacity: 0;
-            /* Hidden initially */
             transition: opacity 0.3s ease, visibility 0.3s ease;
             z-index: 10;
-            /* Ensure it is on top of other content */
         }
 
         .dropdown.active .dropdown-content {
             display: block;
-            /* Make it visible */
             visibility: visible;
             opacity: 1;
-            /* Fade in */
         }
 
         .dropdown-content li {
@@ -137,7 +132,7 @@
             margin-top: 20px;
         }
 
-        /* Custom scrollbar */
+        /* Sidebar scrollbar */
         .sidebar::-webkit-scrollbar {
             width: 8px;
         }
@@ -151,10 +146,28 @@
             border-radius: 10px;
         }
 
-        /* Hover effect for the sidebar */
-        .sidebar ul li a:hover {
-            background-color: #ff5722;
+        /* Logout Button Styling */
+        .logout-btn {
+            background-color: #f44336;
+            border: none;
+            padding: 12px 20px;
             color: white;
+            font-size: 16px;
+            width: 100%;
+            text-align: center;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background-color: #d32f2f;
+            transform: scale(1.05);
+        }
+
+        .logout-btn:focus {
+            outline: none;
         }
     </style>
 </head>
@@ -200,16 +213,22 @@
                     <li><a href="{{ route('perhitungan.processing') }}" class="text-lg">Processing</a></li>
                 </ul>
             </li>
+
+            <!-- Logout Option -->
+            <li>
+                <form action="{{ route('logout') }}" method="POST" id="logout-form">
+                    @csrf
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            </li>
         </ul>
     </div>
 
     <div class="main-content">
-        <!-- Header -->
         <div class="header">
             <h2>Dashboard</h2>
         </div>
 
-        <!-- Card Section -->
         <div class="card">
             <h4 class="total">Rp {{ number_format($totalPenjualan, 0, ',', '.') }},-</h4>
             <p class="total-description">

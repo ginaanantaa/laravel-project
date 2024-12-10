@@ -6,13 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Data Menu Makanan</title>
+    <title>Data menu</title>
 
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Link to Poppins font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
+        /* Apply Poppins font to the whole page */
         body {
-            font-family: "Poppins";
+            font-family: "Poppins", sans-serif;
             background-color: #f7fafc;
             color: #2d3748;
             margin: 0;
@@ -129,28 +133,29 @@
             width: 48%;
         }
 
-        .no-data {
-            text-align: center;
-            font-size: 1.25rem;
-            color: #e2e8f0;
-            font-weight: 500;
-            padding: 20px;
-            background-color: #ff7043;
+        /* Style for success message */
+        .alert-success {
+            background-color: #38a169;
+            color: white;
+            padding: 15px;
             border-radius: 8px;
-            margin-top: 30px;
+            margin-bottom: 20px;
+            font-size: 1rem;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Data Menu Makanan</h1>
+        <h1>Data menu</h1>
 
-        <!-- Check if there are menus -->
-        @if($menus->isEmpty())
-        <div class="no-data">Belum ada menu yang tersedia.</div>
-        @else
-        <!-- Table to display menu data -->
+        <!-- Success message display -->
+        @if(session('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+        @endif
+
         <table>
             <thead>
                 <tr>
@@ -167,32 +172,33 @@
                     <td>{{ $menu->kode_makanan }}</td>
                     <td>{{ $menu->nama_makanan }}</td>
                     <td>{{ $menu->rincian }}</td>
-                    <td>{{ number_format($menu->harga, 0, ',', '.') }}</td>
+                    <td>Rp{{ number_format($menu->harga, 0, ',', '.') }}</td>
                     <td>
-                        <!-- Edit and Delete Buttons -->
-                        <a href="{{ route('data.menu.edit', $menu->id) }}" class="btn-edit">Edit</a>
-                        <form action="{{ route('data.menu.destroy', $menu->id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('data.menu.edit', $menu->id) }}" method="GET" style="display: inline;">
+                            <button type="submit" class="btn btn-edit">Edit</button>
+                        </form>
+                        <form action="{{ route('data.menu.destroy', $menu->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn-delete" onclick="return confirm('Yakin ingin menghapus menu ini?')">Delete</button>
+                            <button type="submit" class="btn btn-delete" onclick="return confirm('Yakin ingin menghapus data ini?')">Delete</button>
                         </form>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
-        @endif
 
-        <!-- Button container with side-by-side buttons -->
         <div class="button-container">
-            <!-- Button to go to Tambah page -->
-            <form action="{{ route('input.menu') }}" method="GET">
-                <button type="submit" class="btn btn-tambah">Tambah Menu</button>
+            <form action="{{ url('/input/menu') }}" method="GET">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-tambah">Tambah</button>
+                </div>
             </form>
 
-            <!-- Back Button (Kembali) to go to /dashboard -->
             <form action="{{ url('/dashboard') }}" method="GET">
-                <button type="submit" class="btn btn-kembali">Kembali</button>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-kembali">Kembali</button>
+                </div>
             </form>
         </div>
     </div>

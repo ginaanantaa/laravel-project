@@ -8,8 +8,12 @@
 
     <title>Edit Data Karyawan</title>
 
+    <!-- Link to Poppins font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+
     <style>
         body {
+            font-family: "Poppins";
             background-color: #f7fafc;
             color: #2d3748;
             margin: 0;
