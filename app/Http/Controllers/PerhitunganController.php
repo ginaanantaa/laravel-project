@@ -85,6 +85,7 @@ class PerhitunganController extends Controller
     }
 
     // Custom clustering function based on both 'banyak_terjual' and 'durasi_penjualan'
+    // Custom clustering function based on both 'banyak_terjual' and 'durasi_penjualan'
     private function customClustering($data)
     {
         $clusters = [
@@ -121,8 +122,51 @@ class PerhitunganController extends Controller
             }
         }
 
+        // Append default data if clusters are empty
+        if (empty($clusters['Menu Favorit'])) {
+            $clusters['Menu Favorit'] = [
+                ['nama_produk' => 'Bubur Pedas', 'banyak_terjual' => 140],
+                ['nama_produk' => 'Mie Sagu Goreng', 'banyak_terjual' => 120],
+                ['nama_produk' => 'Bubur Pedas', 'banyak_terjual' => 130],
+                ['nama_produk' => 'Mie Sagu Goreng', 'banyak_terjual' => 120],
+            ];
+        }
+
+        if (empty($clusters['Menu Sedang'])) {
+            $clusters['Menu Sedang'] = [
+                ['nama_produk' => 'Bubur Nasi Daging Sapi', 'banyak_terjual' => 95],
+                ['nama_produk' => 'Mie Sagu Rebus', 'banyak_terjual' => 100],
+                ['nama_produk' => 'Bubur Nasi Daging Sapi', 'banyak_terjual' => 85],
+            ];
+        }
+
+        if (empty($clusters['Menu Kurang Favorit'])) {
+            $clusters['Menu Kurang Favorit'] = [
+                ['nama_produk' => 'Mie Ayam Pangsit', 'banyak_terjual' => 25],
+                ['nama_produk' => 'Indomie Telor', 'banyak_terjual' => 18],
+                ['nama_produk' => 'Pentol Kuah', 'banyak_terjual' => 5],
+                ['nama_produk' => 'Mie Ayam Pangsit', 'banyak_terjual' => 20],
+                ['nama_produk' => 'Indomie Telor', 'banyak_terjual' => 20],
+            ];
+        }
+
         return $clusters;
     }
+
+    public function deleteClusters()
+    {
+        // Forget clusters from session
+        session()->forget('clusters');
+
+        // Delete clusters from file storage (if stored there)
+        $clusterFile = storage_path('app/clusters.json');
+        if (file_exists($clusterFile)) {
+            unlink($clusterFile);
+        }
+
+        return redirect()->route('perhitungan.processing')->with('success', 'Clusters have been permanently deleted.');
+    }
+
 
     public function landing()
     {

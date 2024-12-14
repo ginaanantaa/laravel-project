@@ -99,6 +99,7 @@ Route::get('/perhitungan/processing', [PerhitunganController::class, 'processing
 Route::get('/perhitungan/result', [PerhitunganController::class, 'result'])->name('perhitungan.result');
 
 Route::get('/', [PerhitunganController::class, 'landing'])->name('landing');
+Route::get('/delete-clusters', [PerhitunganController::class, 'deleteClusters'])->name('clusters.delete');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
