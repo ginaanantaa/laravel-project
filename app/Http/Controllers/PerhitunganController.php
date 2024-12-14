@@ -136,11 +136,31 @@ class PerhitunganController extends Controller
 
         // If clusters are not found, redirect to the processing page
         if (!$clusters) {
-            return redirect()->route('perhitungan.processing');
+            return redirect()->route('');
         }
 
-        // Get only the "Menu Favorit" cluster
+        // Get only the "Menu Favorit" cluster or set default data if not available
         $menuFavorit = $clusters['Menu Favorit'] ?? [];
+
+        // If "Menu Favorit" is empty, provide default data
+        if (empty($menuFavorit)) {
+            $menuFavorit = [
+                [
+                    'kode_makanan' => 'BPD-01',
+                    'nama_makanan' => 'Bubur Pedas',
+                    'rincian' => 'Bubur dengan bumbu khas',
+                    'banyak_terjual' => 140,
+                    'harga' => 14000,
+                ],
+                [
+                    'kode_makanan' => 'MSG-01',
+                    'nama_makanan' => 'Mie Sagu Goreng',
+                    'rincian' => 'Mie sagu yang digoreng dengan bumbu lezat',
+                    'banyak_terjual' => 120,
+                    'harga' => 14000,
+                ],
+            ];
+        }
 
         // Remove duplicates based on 'kode_makanan'
         $menuFavorit = collect($menuFavorit)->unique('kode_makanan')->values()->all();
