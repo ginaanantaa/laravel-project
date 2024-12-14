@@ -136,7 +136,7 @@ class PerhitunganController extends Controller
 
         // If clusters are not found, redirect to the processing page
         if (!$clusters) {
-            return redirect()->route('');
+            return redirect()->route('/welcomes');
         }
 
         // Get only the "Menu Favorit" cluster or set default data if not available
