@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Penjualan;
+use Phpml\Clustering\KMeans;
 
 class PerhitunganController extends Controller
 {
@@ -49,19 +50,40 @@ class PerhitunganController extends Controller
     // Perform the clustering analysis on the data
     private function performClustering($penjualans)
     {
-        // Map the data for clustering - assuming both 'banyak_terjual' and 'durasi_penjualan' are used
-        $data = $penjualans->map(function ($penjualan) {
+        // Fetch all related Menu records using 'nama_makanan' (adjusted to match 'nama_produk' from Penjualan)
+        $menus = \App\Models\Menu::whereIn('nama_makanan', $penjualans->pluck('nama_produk'))->get();
+
+        // Prepare data for clustering
+        $data = $penjualans->map(function ($penjualan) use ($menus) {
+            $menu = $menus->firstWhere('nama_makanan', $penjualan->nama_produk); // Match based on nama_produk to nama_makanan
             return [
-                'nama_produk' => $penjualan->nama_produk,
+                'kode_makanan' => $menu->kode_makanan,
+                'nama_makanan' => $menu?->nama_makanan ?? $penjualan->nama_produk,
+                'rincian' => $menu?->rincian ?? 'Tidak tersedia',
+                'harga' => $penjualan->harga_per_unit,
                 'banyak_terjual' => $penjualan->banyak_terjual,
                 'durasi_penjualan' => $penjualan->durasi_penjualan,
             ];
         });
 
-        // Perform clustering with custom logic
+        $datacluster = $penjualans->map(function ($penjualan) {
+            return [
+                $penjualan->banyak_terjual,
+                $penjualan->durasi_penjualan,
+            ];
+        })->toArray();
+
+        // Perform clustering (KMeans)
+        $kmeans = new KMeans(3);
+        $clusters = $kmeans->cluster($datacluster);
+
+        // Store basic clustering results in the session
+        session(['clusters' => $clusters]);
+
+        // Perform custom clustering logic
         $clusters = $this->customClustering($data);
 
-        // Store the clusters in the session for later use on the result page
+        // Store custom clustering results in the session
         session(['clusters' => $clusters]);
 
         return $clusters;
@@ -70,24 +92,60 @@ class PerhitunganController extends Controller
     // Custom clustering function based on both 'banyak_terjual' and 'durasi_penjualan'
     private function customClustering($data)
     {
-        // Define the cluster thresholds based on the 'banyak_terjual' and 'durasi_penjualan' 
         $clusters = [
             'Menu Favorit' => [],
             'Menu Sedang' => [],
             'Menu Kurang Favorit' => [],
         ];
 
-        // Define the criteria for clustering based on 'banyak_terjual' and 'durasi_penjualan'
         foreach ($data as $item) {
             if ($item['banyak_terjual'] >= 85 + ((140 - 85) / 2) && $item['durasi_penjualan'] == 1) {
-                $clusters['Menu Favorit'][] = $item;
+                $clusters['Menu Favorit'][] = [
+                    'kode_makanan' => $item['kode_makanan'] ?? null,
+                    'nama_makanan' => $item['nama_makanan'],
+                    'rincian' => $item['rincian'] ?? 'Tidak tersedia',
+                    'harga' => $item['harga'] ?? 0,
+                    'banyak_terjual' => $item['banyak_terjual'],
+                ];
             } elseif ($item['banyak_terjual'] >= 5 + ((85 - 5) / 2) && $item['banyak_terjual'] < 140 && $item['durasi_penjualan'] == 1) {
-                $clusters['Menu Sedang'][] = $item;
+                $clusters['Menu Sedang'][] = [
+                    'kode_makanan' => $item['kode_makanan'] ?? null,
+                    'nama_makanan' => $item['nama_makanan'],
+                    'rincian' => $item['rincian'] ?? 'Tidak tersedia',
+                    'harga' => $item['harga'] ?? 0,
+                    'banyak_terjual' => $item['banyak_terjual'],
+                ];
             } else {
-                $clusters['Menu Kurang Favorit'][] = $item;
+                $clusters['Menu Kurang Favorit'][] = [
+                    'kode_makanan' => $item['kode_makanan'] ?? null,
+                    'nama_makanan' => $item['nama_makanan'],
+                    'rincian' => $item['rincian'] ?? 'Tidak tersedia',
+                    'harga' => $item['harga'] ?? 0,
+                    'banyak_terjual' => $item['banyak_terjual'],
+                ];
             }
         }
 
         return $clusters;
+    }
+
+    public function landing()
+    {
+        // Retrieve the clusters from the session
+        $clusters = session('clusters');
+
+        // If clusters are not found, redirect to the processing page
+        if (!$clusters) {
+            return redirect()->route('perhitungan.processing');
+        }
+
+        // Get only the "Menu Favorit" cluster
+        $menuFavorit = $clusters['Menu Favorit'] ?? [];
+
+        // Remove duplicates based on 'kode_makanan'
+        $menuFavorit = collect($menuFavorit)->unique('kode_makanan')->values()->all();
+
+        // Return the landing view with "Menu Favorit"
+        return view('landing', compact('menuFavorit'));
     }
 }

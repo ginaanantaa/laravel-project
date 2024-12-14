@@ -129,7 +129,7 @@
             <tbody>
                 @foreach($clusterItems as $item)
                 <tr>
-                    <td>{{ $item['nama_produk'] }}</td>
+                    <td>{{ $item['nama_makanan'] }}</td>
                     <td>{{ $item['banyak_terjual'] }}</td>
                 </tr>
                 @endforeach
@@ -147,5 +147,6 @@
         </div>
     </div>
 </body>
+
 
 </html>

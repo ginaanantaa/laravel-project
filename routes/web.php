@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AuthController;
 
 use App\Http\Controllers\DataController;  // Import the DataController
 use App\Http\Controllers\InputController;  // Import the InputController
@@ -15,7 +16,7 @@ use App\Http\Controllers\PemasokController;
 use App\Http\Controllers\InventarisController;
 use App\Http\Controllers\KaryawanController;
 
-Route::get('/', function () {
+Route::get('/welcomes', function () {
     return view('welcomes');
 });
 
@@ -97,4 +98,9 @@ Route::delete('/data/inventaris/{id}', [InventarisController::class, 'destroy'])
 Route::get('/perhitungan/processing', [PerhitunganController::class, 'processing'])->name('perhitungan.processing');
 Route::get('/perhitungan/result', [PerhitunganController::class, 'result'])->name('perhitungan.result');
 
+Route::get('/', [PerhitunganController::class, 'landing'])->name('landing');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// Define the logout route if you want custom behavior or leave it as is
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

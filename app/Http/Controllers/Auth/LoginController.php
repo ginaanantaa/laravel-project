@@ -8,9 +8,9 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 class LoginController extends Controller
 {
     /*
-    |--------------------------------------------------------------------------
+    |----------------------------------------------------------------------
     | Login Controller
-    |--------------------------------------------------------------------------
+    |----------------------------------------------------------------------
     |
     | This controller handles authenticating users for the application and
     | redirecting them to your home screen. The controller uses a trait
@@ -36,5 +36,16 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+    }
+
+    /**
+     * Override the method to redirect after logout.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function loggedOut()
+    {
+        // Redirect to home ("/") after logout
+        return redirect('/');
     }
 }

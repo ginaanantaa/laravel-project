@@ -9,11 +9,16 @@ class Menu extends Model
 {
     use HasFactory;
 
-    // Specify which fields are mass assignable
     protected $fillable = [
         'kode_makanan',
         'nama_makanan',
         'rincian',
         'harga',
     ];
+
+    public function penjualans()
+    {
+        // Change the foreign key to 'nama_makanan'
+        return $this->hasMany(Penjualan::class, 'nama_produk', 'nama_makanan');
+    }
 }

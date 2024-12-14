@@ -146,19 +146,36 @@
             border-radius: 10px;
         }
 
+        /* Styling for the Dropdown items */
+        .dropdown-content li a {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            display: block;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-content li a:hover {
+            background-color: #d32f2f;
+        }
+
+        .dropdown.active .dropdown-content {
+            padding-top: 10px;
+            /* Adjusted for spacing */
+        }
+
         /* Logout Button Styling */
         .logout-btn {
-            background-color: #f44336;
-            border: none;
-            padding: 12px 20px;
-            color: white;
+            padding: 10px 20px;
             font-size: 16px;
-            width: 100%;
-            text-align: center;
-            border-radius: 5px;
-            margin-top: 20px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            color: white;
+            background-color: #ff7043;
+            border: none;
+            text-align: left;
             cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         .logout-btn:hover {
@@ -214,12 +231,17 @@
                 </ul>
             </li>
 
-            <!-- Logout Option -->
-            <li>
-                <form action="{{ route('logout') }}" method="POST" id="logout-form">
-                    @csrf
-                    <button type="submit" class="logout-btn">Logout</button>
-                </form>
+            <!-- 'Lainnya' Dropdown for Logout -->
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="text-lg dropbtn" onclick="toggleDropdown('logoutDropdown')">Lainnya</a>
+                <ul id="logoutDropdown" class="dropdown-content ml-4 space-y-2">
+                    <li>
+                        <form action="{{ route('logout') }}" method="POST" id="logout-form">
+                            @csrf
+                            <button type="submit" class="logout-btn">Logout</button>
+                        </form>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
