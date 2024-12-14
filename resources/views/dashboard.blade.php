@@ -227,7 +227,7 @@
             <li class="dropdown">
                 <a href="javascript:void(0)" class="text-lg dropbtn" onclick="toggleDropdown('perhitunganDropdown')">Perhitungan</a>
                 <ul id="perhitunganDropdown" class="dropdown-content ml-4 space-y-2">
-                    <li><a href="{{ route('perhitungan.result') }}" class="text-lg">Processing</a></li>
+                    <li><a href="{{ route('perhitungan.processing') }}" class="text-lg">Processing</a></li>
                 </ul>
             </li>
 

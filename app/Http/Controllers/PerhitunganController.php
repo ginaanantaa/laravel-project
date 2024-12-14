@@ -38,11 +38,6 @@ class PerhitunganController extends Controller
         // Retrieve the clusters from the session
         $clusters = session('clusters');
 
-        // If clusters are not found, redirect to the processing page
-        if (!$clusters) {
-            return redirect()->route('perhitungan.processing');
-        }
-
         // Return the result view with the clusters
         return view('perhitungan.result', compact('clusters'));
     }
