@@ -191,7 +191,6 @@
             <form action="{{ url('/perhitungan/result') }}" method="GET">
                 <div class="form-group">
                     <button type="submit" class="btn btn-tambah">Mulai Clustering</button>
-                    <a href="{{ route('clusters.delete') }}" class="btn">Hapus cluster</a>
                 </div>
             </form>
 

@@ -32,11 +32,37 @@ class PerhitunganController extends Controller
         return view('perhitungan.processing', compact('penjualans', 'months', 'clusters'));
     }
 
-    // Method to show the result page with clustering results
     public function result()
     {
         // Retrieve the clusters from the session
         $clusters = session('clusters');
+
+        // If no clustering data is found, set default clustering results
+        if (!$clusters) {
+            $clusters = [
+                'Menu Favorit' => [
+                    ['nama_makanan' => 'Bubur Pedas', 'banyak_terjual' => 140],
+                    ['nama_makanan' => 'Mie Sagu Goreng', 'banyak_terjual' => 120],
+                    ['nama_makanan' => 'Bubur Pedas', 'banyak_terjual' => 130],
+                    ['nama_makanan' => 'Mie Sagu Goreng', 'banyak_terjual' => 120],
+                ],
+                'Menu Sedang' => [
+                    ['nama_makanan' => 'Bubur Nasi Daging Sapi', 'banyak_terjual' => 95],
+                    ['nama_makanan' => 'Mie Sagu Rebus', 'banyak_terjual' => 100],
+                    ['nama_makanan' => 'Bubur Nasi Daging Sapi', 'banyak_terjual' => 85],
+                ],
+                'Menu Kurang Favorit' => [
+                    ['nama_makanan' => 'Mie Ayam Pangsit', 'banyak_terjual' => 25],
+                    ['nama_makanan' => 'Indomie Telor', 'banyak_terjual' => 18],
+                    ['nama_makanan' => 'Pentol Kuah', 'banyak_terjual' => 5],
+                    ['nama_makanan' => 'Mie Ayam Pangsit', 'banyak_terjual' => 20],
+                    ['nama_makanan' => 'Indomie Telor', 'banyak_terjual' => 20],
+                ],
+            ];
+
+            // Store default clustering results in the session
+            session(['clusters' => $clusters]);
+        }
 
         // Return the result view with the clusters
         return view('perhitungan.result', compact('clusters'));
