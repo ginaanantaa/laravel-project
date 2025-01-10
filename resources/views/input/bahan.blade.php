@@ -56,8 +56,8 @@
             margin-bottom: 10px;
         }
 
-        input,
-        textarea {
+        select,
+        input {
             width: 100%;
             padding: 14px;
             border-radius: 8px;
@@ -69,17 +69,14 @@
             transition: all 0.3s ease;
         }
 
-        input:focus,
-        textarea:focus {
+        select:focus,
+        input:focus {
             border-color: #ff7043;
-            /* Orange Focus Color */
             box-shadow: 0 0 8px rgba(255, 112, 67, 0.3);
-            /* Orange Focus Shadow */
         }
 
         button {
             background-color: #ff7043;
-            /* Orange Button */
             color: white;
             padding: 14px 28px;
             font-size: 1.125rem;
@@ -93,7 +90,6 @@
 
         button:hover {
             background-color: #ff5722;
-            /* Darker orange on hover */
             transform: translateY(-2px);
         }
 
@@ -105,7 +101,6 @@
             margin-bottom: 0;
         }
 
-        /* Success Message Styling */
         .alert-success {
             background-color: #38a169;
             color: white;
@@ -116,10 +111,8 @@
             font-size: 1.125rem;
         }
 
-        /* Button Styling for Kembali */
         .btn-kembali {
             background-color: #f0f4f8;
-            /* Light background for Kembali */
             color: #2d3748;
             padding: 14px 28px;
             font-size: 1.125rem;
@@ -134,7 +127,6 @@
 
         .btn-kembali:hover {
             background-color: #e2e8f0;
-            /* Light hover color */
             transform: translateY(-2px);
         }
 
@@ -146,7 +138,6 @@
 
 <body class="font-sans antialiased">
     <div class="container">
-        <!-- Display success message if it exists -->
         @if(session('success'))
         <div class="alert-success">
             {{ session('success') }}
@@ -160,27 +151,52 @@
             @csrf
             <div class="form-group">
                 <label for="kode_bahan">Kode Bahan</label>
-                <input type="text" id="kode_bahan" name="kode_bahan" required>
+                <select id="kode_bahan" name="kode_bahan" required>
+                    <option value="">Select Kode Bahan</option>
+                    @foreach($kode_bahan as $bahan)
+                    <option value="{{ $bahan->kode_bahan }}">{{ $bahan->kode_bahan }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="nama_bahan">Nama Bahan</label>
-                <input type="text" id="nama_bahan" name="nama_bahan" required>
+                <select id="nama_bahan" name="nama_bahan" required>
+                    <option value="">Select Nama Bahan</option>
+                    @foreach($nama_bahan as $bahan)
+                    <option value="{{ $bahan->nama_bahan }}">{{ $bahan->nama_bahan }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="satuan">Satuan</label>
-                <input type="text" id="satuan" name="satuan" required>
+                <select id="satuan" name="satuan" required>
+                    <option value="">Select Satuan</option>
+                    @foreach($satuan as $bahan)
+                    <option value="{{ $bahan->satuan }}">{{ $bahan->satuan }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="stok">Stok</label>
-                <input type="number" id="stok" name="stok" required>
+                <select id="stok" name="stok" required>
+                    <option value="">Select Stok</option>
+                    @foreach($stok as $bahan)
+                    <option value="{{ $bahan->stok }}">{{ $bahan->stok }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="harga">Harga</label>
-                <input type="number" id="harga" name="harga" required>
+                <select id="harga" name="harga" required>
+                    <option value="">Select Harga</option>
+                    @foreach($harga as $bahan)
+                    <option value="{{ $bahan->harga }}">Rp {{ number_format($bahan->harga, 2, ',', '.') }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">

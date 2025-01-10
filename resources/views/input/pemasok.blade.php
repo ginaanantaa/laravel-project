@@ -56,8 +56,8 @@
             margin-bottom: 10px;
         }
 
-        input,
-        textarea {
+        select,
+        input {
             width: 100%;
             padding: 14px;
             border-radius: 8px;
@@ -69,17 +69,14 @@
             transition: all 0.3s ease;
         }
 
-        input:focus,
-        textarea:focus {
+        select:focus,
+        input:focus {
             border-color: #ff7043;
-            /* Orange Focus Color */
             box-shadow: 0 0 8px rgba(255, 112, 67, 0.3);
-            /* Orange Focus Shadow */
         }
 
         button {
             background-color: #ff7043;
-            /* Orange Button */
             color: white;
             padding: 14px 28px;
             font-size: 1.125rem;
@@ -93,7 +90,6 @@
 
         button:hover {
             background-color: #ff5722;
-            /* Darker orange on hover */
             transform: translateY(-2px);
         }
 
@@ -105,7 +101,6 @@
             margin-bottom: 0;
         }
 
-        /* Success Message Styling */
         .alert-success {
             background-color: #38a169;
             color: white;
@@ -116,10 +111,8 @@
             font-size: 1.125rem;
         }
 
-        /* Button Styling for Kembali */
         .btn-kembali {
             background-color: #f0f4f8;
-            /* Light background for Kembali */
             color: #2d3748;
             padding: 14px 28px;
             font-size: 1.125rem;
@@ -134,7 +127,6 @@
 
         .btn-kembali:hover {
             background-color: #e2e8f0;
-            /* Light hover color */
             transform: translateY(-2px);
         }
 
@@ -160,22 +152,42 @@
             @csrf
             <div class="form-group">
                 <label for="kode_pemasok">Kode Pemasok</label>
-                <input type="text" id="kode_pemasok" name="kode_pemasok" required>
+                <select id="kode_pemasok" name="kode_pemasok" required>
+                    <option value="">Select Kode Pemasok</option>
+                    @foreach($kode_pemasok as $pemasok)
+                    <option value="{{ $pemasok->kode_pemasok }}">{{ $pemasok->kode_pemasok }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="nama_pemasok">Nama Pemasok</label>
-                <input type="text" id="nama_pemasok" name="nama_pemasok" required>
+                <select id="nama_pemasok" name="nama_pemasok" required>
+                    <option value="">Select Nama Pemasok</option>
+                    @foreach($nama_pemasok as $pemasok)
+                    <option value="{{ $pemasok->nama_pemasok }}">{{ $pemasok->nama_pemasok }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="alamat">Alamat</label>
-                <textarea id="alamat" name="alamat" required></textarea>
+                <select id="alamat" name="alamat" required>
+                    <option value="">Select Alamat</option>
+                    @foreach($alamat as $pemasok)
+                    <option value="{{ $pemasok->alamat }}">{{ $pemasok->alamat }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="nomor_telepon">Nomor Telepon</label>
-                <input type="text" id="nomor_telepon" name="nomor_telepon" required>
+                <select id="nomor_telepon" name="nomor_telepon" required>
+                    <option value="">Select Nomor Telepon</option>
+                    @foreach($nomor_telepon as $pemasok)
+                    <option value="{{ $pemasok->nomor_telepon }}">{{ $pemasok->nomor_telepon }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">

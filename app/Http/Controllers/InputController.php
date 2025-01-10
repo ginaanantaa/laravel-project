@@ -18,7 +18,11 @@ class InputController extends Controller
     // Method to display the menu input form
     public function menu()
     {
-        return view('input.menu');
+        // Fetch menu items from the database
+        $menus = Menu::all(); // Or use a more specific query if needed
+
+        // Pass the data to the view
+        return view('input.menu', compact('menus'));
     }
 
     // Method to handle form submission
@@ -47,7 +51,15 @@ class InputController extends Controller
     // Show the form for adding bahan
     public function bahan()
     {
-        return view('input.bahan');
+        /// Fetch distinct values for each dropdown field
+        $kode_bahan = Bahan::select('kode_bahan')->distinct()->get();
+        $nama_bahan = Bahan::select('nama_bahan')->distinct()->get();
+        $satuan = Bahan::select('satuan')->distinct()->get();
+        $stok = Bahan::select('stok')->distinct()->get();
+        $harga = Bahan::select('harga')->distinct()->get();
+
+        // Pass the data to the view
+        return view('input.bahan', compact('kode_bahan', 'nama_bahan', 'satuan', 'stok', 'harga'));
     }
 
     // Handle the form submission to add a bahan (ingredient)
@@ -77,7 +89,14 @@ class InputController extends Controller
 
     public function pemasok()
     {
-        return view('input.pemasok');
+        // Fetch distinct values for each dropdown field
+        $kode_pemasok = Pemasok::select('kode_pemasok')->distinct()->get();
+        $nama_pemasok = Pemasok::select('nama_pemasok')->distinct()->get();
+        $alamat = Pemasok::select('alamat')->distinct()->get();
+        $nomor_telepon = Pemasok::select('nomor_telepon')->distinct()->get();
+
+        // Pass the data to the view
+        return view('input.pemasok', compact('kode_pemasok', 'nama_pemasok', 'alamat', 'nomor_telepon'));
     }
 
     public function submitPemasok(Request $request)
@@ -104,7 +123,14 @@ class InputController extends Controller
 
     public function karyawan()
     {
-        return view('input.karyawan');
+        // Fetch distinct values for each dropdown field
+        $kode_karyawan = Karyawan::select('kode_karyawan')->distinct()->get();
+        $nama_karyawan = Karyawan::select('nama_karyawan')->distinct()->get();
+        $jabatan = Karyawan::select('jabatan')->distinct()->get();
+        $nomor_telepon = Karyawan::select('nomor_telepon')->distinct()->get();
+
+        // Pass the data to the view
+        return view('input.karyawan', compact('kode_karyawan', 'nama_karyawan', 'jabatan', 'nomor_telepon'));
     }
 
     // Handle the submission of karyawan form
@@ -133,7 +159,14 @@ class InputController extends Controller
     // Display the form for adding inventory
     public function inventaris()
     {
-        return view('input.inventaris');
+        // Fetch distinct values for dropdowns
+        $kode_barang = Inventaris::select('kode_barang')->distinct()->get();
+        $nama_barang = Inventaris::select('nama_barang')->distinct()->get();
+        $jumlah = Inventaris::select('jumlah')->distinct()->get();
+        $kondisi = Inventaris::select('kondisi')->distinct()->get();
+
+        // Pass the data to the view
+        return view('input.inventaris', compact('kode_barang', 'nama_barang', 'jumlah', 'kondisi'));
     }
 
     // Handle the form submission for inventory
@@ -162,7 +195,23 @@ class InputController extends Controller
     // Show the form for adding penjualan
     public function penjualan()
     {
-        return view('input.penjualan');
+        // Fetch distinct values for dropdowns
+        $nama_produk = Penjualan::select('nama_produk')->distinct()->get();
+        $tanggal = Penjualan::select('tanggal')->distinct()->get();
+        $banyak_terjual = Penjualan::select('banyak_terjual')->distinct()->get();
+        $harga_per_unit = Penjualan::select('harga_per_unit')->distinct()->get();
+        $durasi_penjualan = Penjualan::select('durasi_penjualan')->distinct()->get();
+        $bulan_periode = Penjualan::select('bulan_periode')->distinct()->get();
+
+        // Pass the data to the view
+        return view('input.penjualan', compact(
+            'nama_produk',
+            'tanggal',
+            'banyak_terjual',
+            'harga_per_unit',
+            'durasi_penjualan',
+            'bulan_periode'
+        ));
     }
 
     // Handle the form submission for penjualan

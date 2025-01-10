@@ -56,8 +56,7 @@
             margin-bottom: 10px;
         }
 
-        input,
-        textarea {
+        select {
             width: 100%;
             padding: 14px;
             border-radius: 8px;
@@ -69,17 +68,13 @@
             transition: all 0.3s ease;
         }
 
-        input:focus,
-        textarea:focus {
+        select:focus {
             border-color: #ff7043;
-            /* Orange Focus Color */
             box-shadow: 0 0 8px rgba(255, 112, 67, 0.3);
-            /* Orange Focus Shadow */
         }
 
         button {
             background-color: #ff7043;
-            /* Orange Button */
             color: white;
             padding: 14px 28px;
             font-size: 1.125rem;
@@ -93,7 +88,6 @@
 
         button:hover {
             background-color: #ff5722;
-            /* Darker orange on hover */
             transform: translateY(-2px);
         }
 
@@ -105,7 +99,6 @@
             margin-bottom: 0;
         }
 
-        /* Success Message Styling */
         .alert-success {
             background-color: #38a169;
             color: white;
@@ -116,10 +109,8 @@
             font-size: 1.125rem;
         }
 
-        /* Button Styling for Kembali */
         .btn-kembali {
             background-color: #f0f4f8;
-            /* Light background for Kembali */
             color: #2d3748;
             padding: 14px 28px;
             font-size: 1.125rem;
@@ -134,7 +125,6 @@
 
         .btn-kembali:hover {
             background-color: #e2e8f0;
-            /* Light hover color */
             transform: translateY(-2px);
         }
 
@@ -146,7 +136,6 @@
 
 <body class="font-sans antialiased">
     <div class="container">
-        <!-- Display success message if it exists -->
         @if(session('success'))
         <div class="alert-success">
             {{ session('success') }}
@@ -155,37 +144,67 @@
 
         <h1>Form Penjualan</h1>
 
-        <!-- Form -->
         <form action="{{ route('input.penjualan.submit') }}" method="POST">
             @csrf
+
             <div class="form-group">
                 <label for="nama_produk">Nama Produk</label>
-                <input type="text" id="nama_produk" name="nama_produk" required>
+                <select id="nama_produk" name="nama_produk" required>
+                    <option value="">Select Nama Produk</option>
+                    @foreach($nama_produk as $item)
+                    <option value="{{ $item->nama_produk }}">{{ $item->nama_produk }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="tanggal">Tanggal</label>
-                <input type="date" id="tanggal" name="tanggal" required>
+                <select id="tanggal" name="tanggal" required>
+                    <option value="">Select Tanggal</option>
+                    @foreach($tanggal as $item)
+                    <option value="{{ $item->tanggal }}">{{ $item->tanggal }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="banyak_terjual">Banyak Terjual</label>
-                <input type="number" id="banyak_terjual" name="banyak_terjual" required>
+                <select id="banyak_terjual" name="banyak_terjual" required>
+                    <option value="">Select Banyak Terjual</option>
+                    @foreach($banyak_terjual as $item)
+                    <option value="{{ $item->banyak_terjual }}">{{ $item->banyak_terjual }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="harga_per_unit">Harga Per Unit</label>
-                <input type="number" id="harga_per_unit" name="harga_per_unit" required>
+                <select id="harga_per_unit" name="harga_per_unit" required>
+                    <option value="">Select Harga Per Unit</option>
+                    @foreach($harga_per_unit as $item)
+                    <option value="{{ $item->harga_per_unit }}">{{ $item->harga_per_unit }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="durasi_penjualan">Durasi Penjualan (Hari)</label>
-                <input type="number" id="durasi_penjualan" name="durasi_penjualan" required>
+                <select id="durasi_penjualan" name="durasi_penjualan" required>
+                    <option value="">Select Durasi Penjualan</option>
+                    @foreach($durasi_penjualan as $item)
+                    <option value="{{ $item->durasi_penjualan }}">{{ $item->durasi_penjualan }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="bulan_periode">Bulan Periode</label>
-                <input type="text" id="bulan_periode" name="bulan_periode" required>
+                <select id="bulan_periode" name="bulan_periode" required>
+                    <option value="">Select Bulan Periode</option>
+                    @foreach($bulan_periode as $item)
+                    <option value="{{ $item->bulan_periode }}">{{ $item->bulan_periode }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
@@ -193,7 +212,6 @@
             </div>
         </form>
 
-        <!-- Back Button (Kembali) -->
         <form action="{{ route('data.penjualan') }}" method="GET">
             <div class="form-group">
                 <button type="submit" class="btn-kembali">Kembali</button>

@@ -55,7 +55,8 @@
         }
 
         input,
-        textarea {
+        textarea,
+        select {
             width: 100%;
             padding: 14px;
             border-radius: 8px;
@@ -68,7 +69,8 @@
         }
 
         input:focus,
-        textarea:focus {
+        textarea:focus,
+        select:focus {
             border-color: #ff7043;
             /* Orange focus color */
             box-shadow: 0 0 8px rgba(255, 112, 67, 0.3);
@@ -155,22 +157,56 @@
             @csrf
             <div class="form-group">
                 <label for="kode_makanan">Kode Makanan</label>
-                <input type="text" id="kode_makanan" name="kode_makanan" required>
+                <select id="kode_makanan" name="kode_makanan" required>
+                    <option value="">Select Kode Makanan</option>
+                    @foreach ($menus as $menu)
+                    <option value="{{ $menu->kode_makanan }}"
+                        data-nama="{{ $menu->nama_makanan }}"
+                        data-rincian="{{ $menu->rincian }}"
+                        data-harga="{{ $menu->harga }}">
+                        {{ $menu->kode_makanan }}
+                    </option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="nama_makanan">Nama Makanan</label>
-                <input type="text" id="nama_makanan" name="nama_makanan" required>
+                <select id="nama_makanan" name="nama_makanan" required>
+                    <option value="">Select Nama Makanan</option>
+                    @foreach ($menus as $menu)
+                    <option value="{{ $menu->nama_makanan }}"
+                        data-rincian="{{ $menu->rincian }}"
+                        data-harga="{{ $menu->harga }}">
+                        {{ $menu->nama_makanan }}
+                    </option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="rincian">Rincian</label>
-                <textarea id="rincian" name="rincian" rows="4" required></textarea>
+                <select id="rincian" name="rincian" required>
+                    <option value="">Select Rincian</option>
+                    @foreach ($menus as $menu)
+                    <option value="{{ $menu->rincian }}"
+                        data-harga="{{ $menu->harga }}">
+                        {{ $menu->rincian }}
+                    </option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
                 <label for="harga">Harga</label>
-                <input type="number" id="harga" name="harga" required>
+                <select id="harga" name="harga" required>
+                    <option value="">Select Harga</option>
+                    @foreach ($menus as $menu)
+                    <option value="{{ $menu->harga }}">
+                        {{ $menu->harga }}
+                    </option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
@@ -185,6 +221,22 @@
             </div>
         </form>
     </div>
+
+    <script>
+        // If needed, you can add a script to handle dynamic changes between selects
+        document.getElementById('kode_makanan').addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+
+            var namaMakanan = selectedOption.getAttribute('data-nama');
+            var rincian = selectedOption.getAttribute('data-rincian');
+            var harga = selectedOption.getAttribute('data-harga');
+
+            // Update the other selects based on the selection
+            document.getElementById('nama_makanan').value = namaMakanan;
+            document.getElementById('rincian').value = rincian;
+            document.getElementById('harga').value = harga;
+        });
+    </script>
 </body>
 
 </html>
