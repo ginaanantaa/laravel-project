@@ -196,7 +196,7 @@ class InputController extends Controller
     public function penjualan()
     {
         // Fetch distinct values for dropdowns
-        $nama_produk = Penjualan::select('nama_produk')->distinct()->get();
+        $nama_produk = Menu::select('nama_makanan')->distinct()->get();
         $tanggal = Penjualan::select('tanggal')->distinct()->get();
         $banyak_terjual = Penjualan::select('banyak_terjual')->distinct()->get();
         $harga_per_unit = Penjualan::select('harga_per_unit')->distinct()->get();
