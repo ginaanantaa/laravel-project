@@ -195,23 +195,7 @@ class InputController extends Controller
     // Show the form for adding penjualan
     public function penjualan()
     {
-        // Fetch distinct values for dropdowns
-        $nama_produk = Menu::select('nama_makanan')->distinct()->get();
-        $tanggal = Penjualan::select('tanggal')->distinct()->get();
-        $banyak_terjual = Penjualan::select('banyak_terjual')->distinct()->get();
-        $harga_per_unit = Penjualan::select('harga_per_unit')->distinct()->get();
-        $durasi_penjualan = Penjualan::select('durasi_penjualan')->distinct()->get();
-        $bulan_periode = Penjualan::select('bulan_periode')->distinct()->get();
-
-        // Pass the data to the view
-        return view('input.penjualan', compact(
-            'nama_produk',
-            'tanggal',
-            'banyak_terjual',
-            'harga_per_unit',
-            'durasi_penjualan',
-            'bulan_periode'
-        ));
+        return view('input.penjualan');
     }
 
     // Handle the form submission for penjualan
