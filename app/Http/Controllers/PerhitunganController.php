@@ -78,7 +78,7 @@ class PerhitunganController extends Controller
         $data = $penjualans->map(function ($penjualan) use ($menus) {
             $menu = $menus->firstWhere('nama_makanan', $penjualan->nama_produk); // Match based on nama_produk to nama_makanan
             return [
-                'kode_makanan' => $menu->kode_makanan,
+                // 'kode_makanan' => $menu->kode_makanan,
                 'nama_makanan' => $menu?->nama_makanan ?? $penjualan->nama_produk,
                 'rincian' => $menu?->rincian ?? 'Tidak tersedia',
                 'harga' => $penjualan->harga_per_unit,
