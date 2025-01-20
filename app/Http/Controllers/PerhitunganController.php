@@ -196,34 +196,24 @@ class PerhitunganController extends Controller
 
     public function landing()
     {
-        // Retrieve the clusters from the session
-        $clusters = session('clusters');
+        // Fetch the top 2 products with the highest 'banyak_terjual' from the Penjualan table
+        $topProducts = Penjualan::orderBy('banyak_terjual', 'desc')->get();
 
-        // Get only the "Menu Favorit" cluster or set default data if not available
-        $menuFavorit = $clusters['Menu Favorit'] ?? [];
+        // Map the data to include necessary fields, including `rincian` from the related Menu model
+        $menuFavorit = $topProducts->map(function ($product) {
+            $menu = \App\Models\Menu::where('nama_makanan', $product->nama_produk)->first();
 
-        // If "Menu Favorit" is empty, provide default data
-        if (empty($menuFavorit)) {
-            $menuFavorit = [
-                [
-                    'kode_makanan' => 'BPD-01',
-                    'nama_makanan' => 'Bubur Pedas',
-                    'rincian' => 'Bubur dengan bumbu khas',
-                    'banyak_terjual' => 140,
-                    'harga' => 14000,
-                ],
-                [
-                    'kode_makanan' => 'MSG-01',
-                    'nama_makanan' => 'Mie Sagu Goreng',
-                    'rincian' => 'Mie sagu yang digoreng dengan bumbu lezat',
-                    'banyak_terjual' => 120,
-                    'harga' => 14000,
-                ],
+            return [
+                'kode_makanan' => $menu?->kode_makanan ?? 'Tidak tersedia',
+                'nama_makanan' => $product->nama_produk,
+                'rincian' => $menu?->rincian ?? 'Informasi tidak tersedia',
+                'banyak_terjual' => $product->banyak_terjual,
+                'harga' => $product->harga_per_unit,
             ];
-        }
-
-        // Remove duplicates based on 'kode_makanan'
-        $menuFavorit = collect($menuFavorit)->unique('kode_makanan')->values()->all();
+        })
+            ->unique('nama_makanan') // Remove duplicates based on 'nama_makanan'
+            ->take(2) // Get only the top 2 unique products
+            ->values(); // Reset the keys to make it a clean collection
 
         // Return the landing view with "Menu Favorit"
         return view('landing', compact('menuFavorit'));
